@@ -1,0 +1,14 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages:
+  - build
+
+build:mck7:
+  stage: build
+  script:
+    - docker login --username="$DOCKER_USER" --password="$DOCKER_PASS"
+    - docker build --rm -t mck7/php-fpm:$CI_BUILD_REF_NAME .
+    - docker push mck7/php-fpm:$CI_BUILD_REF_NAME
