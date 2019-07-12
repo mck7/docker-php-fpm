@@ -7,8 +7,8 @@ RUN apt -y update \
         libpng-dev \
         zlib1g-dev \
         libfreetype6-dev \
-		libjpeg62-turbo-dev \
-		libmcrypt-dev \
+    		libjpeg62-turbo-dev \
+    		libmcrypt-dev \
         libxslt-dev \
         libjpeg-dev \
         libcurl3 \
@@ -17,7 +17,8 @@ RUN apt -y update \
         curl \
         ca-certificates \
         sqlite3 \
-        libsqlite3-dev
+        libsqlite3-dev \
+        less
 
 # Add all of the php specific packages
 RUN docker-php-source extract \
