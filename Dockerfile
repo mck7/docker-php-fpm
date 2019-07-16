@@ -5,6 +5,7 @@ MAINTAINER Cory Collier <corycollier@corycollier.com>
 RUN apt -y update \
     && apt -y install \
         libpng-dev \
+        libgmp-dev \
         zlib1g-dev \
         libfreetype6-dev \
     		libjpeg62-turbo-dev \
@@ -28,6 +29,7 @@ RUN docker-php-source extract \
         --with-png-dir=/usr/include/ \
         --enable-gd-jis-conv \
     && docker-php-ext-install \
+        gmp \
         bcmath \
         exif \
         gd \
