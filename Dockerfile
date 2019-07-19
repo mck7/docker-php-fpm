@@ -51,7 +51,11 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
-RUN export COMPOSER_ALLOW_SUPERUSER=1 &&  composer global init
+RUN pecl install xdebug
+
+RUN export COMPOSER_ALLOW_SUPERUSER=1 \
+  && composer global init \
+  && composer global require hirak/prestissimo
 
 # Server configuration overrides
 ADD ./config/php.ini /usr/local/etc/php/conf.d/custom.ini
