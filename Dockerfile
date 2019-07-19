@@ -19,7 +19,11 @@ RUN apt -y update \
         ca-certificates \
         sqlite3 \
         libsqlite3-dev \
-        less
+        less \
+        sendmail-bin \
+        sendmail \
+        sendmail-cf \
+        m4
 
 # Add all of the php specific packages
 RUN docker-php-source extract \
@@ -41,31 +45,36 @@ RUN docker-php-source extract \
         xsl \
         zip
 
+# Install modules not able to be installed any other way
+RUN pecl install xdebug
+
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer
 
+# Configure composer and add prestissimo for faster package installs
+RUN export COMPOSER_ALLOW_SUPERUSER=1 \
+    && composer global init \
+    && composer global require hirak/prestissimo
+
+# Install WP CLI Tools
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
-RUN pecl install xdebug
-
-RUN export COMPOSER_ALLOW_SUPERUSER=1 \
-  && composer global init \
-  && composer global require hirak/prestissimo
+# Extra WP CLI Plugins
+RUN php -d memory_limit=512M "$(which wp)" --allow-root package install markri/wp-sec
 
 # Server configuration overrides
 ADD ./config/php.ini /usr/local/etc/php/conf.d/custom.ini
-
-# extra composer packages
-RUN wp --allow-root package install markri/wp-sec
-
 # Local administration environment overrides
 ADD config/.vimrc /root/.vimrc
 ADD config/.bashrc /root/.bashrc
+
+# Sendmail stuff
+EXPOSE 25
 
 # Set the workdir
 WORKDIR /var/www/html
