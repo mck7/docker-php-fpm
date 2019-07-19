@@ -19,7 +19,11 @@ RUN apt -y update \
         ca-certificates \
         sqlite3 \
         libsqlite3-dev \
-        less
+        less \
+        sendmail-bin \
+        sendmail \
+        sendmail-cf \
+        m4
 
 # Add all of the php specific packages
 RUN docker-php-source extract \
@@ -65,6 +69,9 @@ ADD ./config/php.ini /usr/local/etc/php/conf.d/custom.ini
 # Local administration environment overrides
 ADD config/.vimrc /root/.vimrc
 ADD config/.bashrc /root/.bashrc
+
+# Sendmail stuff
+EXPOSE 25
 
 # Set the workdir
 WORKDIR /var/www/html
