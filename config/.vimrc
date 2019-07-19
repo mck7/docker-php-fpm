@@ -1,5 +1,6 @@
 " { Base config stuff
   syntax on
+  set paste
   set nocompatible
   set vb t_vb=
   set number
