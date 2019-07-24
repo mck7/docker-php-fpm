@@ -60,12 +60,12 @@ RUN export COMPOSER_ALLOW_SUPERUSER=1 \
     && composer global require hirak/prestissimo
 
 # Install WP CLI Tools
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-    && chmod +x wp-cli.phar \
-    && mv wp-cli.phar /usr/local/bin/wp
-
-# Extra WP CLI Plugins
-RUN php -d memory_limit=512M "$(which wp)" --allow-root package install markri/wp-sec
+# RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+#     && chmod +x wp-cli.phar \
+#     && mv wp-cli.phar /usr/local/bin/wp
+#
+# # Extra WP CLI Plugins
+# RUN php -d memory_limit=512M "$(which wp)" --allow-root package install markri/wp-sec
 
 # Server configuration overrides
 ADD ./config/php.ini /usr/local/etc/php/conf.d/custom.ini
