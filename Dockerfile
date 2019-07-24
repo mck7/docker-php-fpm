@@ -46,7 +46,7 @@ RUN docker-php-source extract \
         zip
 
 # Install modules not able to be installed any other way
-RUN pecl install xdebug
+# RUN pecl install xdebug
 
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
