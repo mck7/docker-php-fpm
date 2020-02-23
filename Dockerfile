@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 MAINTAINER Cory Collier <corycollier@corycollier.com>
 
 # Do all of the global system package installations
@@ -28,9 +28,8 @@ RUN apt -y update \
 # Add all of the php specific packages
 RUN docker-php-source extract \
     && docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
+        --with-freetype=/usr/include/ \
+        --with-jpeg=/usr/include/ \
         --enable-gd-jis-conv \
     && docker-php-ext-install \
         gmp \
@@ -69,6 +68,7 @@ RUN export COMPOSER_ALLOW_SUPERUSER=1 \
 
 # Server configuration overrides
 ADD ./config/php.ini /usr/local/etc/php/conf.d/custom.ini
+
 # Local administration environment overrides
 ADD dotfiles/* /root/
 
