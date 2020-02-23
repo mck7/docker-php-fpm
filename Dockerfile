@@ -70,8 +70,7 @@ RUN export COMPOSER_ALLOW_SUPERUSER=1 \
 # Server configuration overrides
 ADD ./config/php.ini /usr/local/etc/php/conf.d/custom.ini
 # Local administration environment overrides
-ADD config/.vimrc /root/.vimrc
-ADD config/.bashrc /root/.bashrc
+ADD dotfiles/* /root/
 
 # Sendmail stuff
 EXPOSE 25
