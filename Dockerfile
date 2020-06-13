@@ -12,7 +12,8 @@ RUN apt -y update \
     		libmcrypt-dev \
         libxslt-dev \
         libjpeg-dev \
-        libcurl3 \
+        libzip-dev \
+        zip \
         less \
         vim \
         curl \
@@ -23,27 +24,29 @@ RUN apt -y update \
         sendmail-bin \
         sendmail \
         sendmail-cf \
-        m4
+        m4 \
+        zsh \
+        git
 
-# Add all of the php specific packages
-RUN docker-php-source extract \
-    && docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-        --enable-gd-jis-conv \
-    && docker-php-ext-install \
-        gmp \
-        bcmath \
-        exif \
-        gd \
-        mysqli \
-        pcntl \
-        pdo \
-        pdo_mysql \
-        pdo_sqlite \
-        xsl \
-        zip
+        # Add all of the php specific packages
+        RUN docker-php-source extract \
+            && docker-php-ext-configure gd \
+                --with-freetype=/usr/include/ \
+                --with-jpeg=/usr/include/ \
+                --enable-gd-jis-conv \
+            && docker-php-ext-install \
+                gmp \
+                bcmath \
+                exif \
+                gd \
+                mysqli \
+                pcntl \
+                pdo \
+                pdo_mysql \
+                pdo_sqlite \
+                xsl \
+                zip
+
 
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -64,19 +67,14 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 # Extra WP CLI Plugins
 RUN php -d memory_limit=512M "$(which wp)" --allow-root package install markri/wp-sec
 
-# Server configuration overrides
-ADD ./config/php.ini /usr/local/etc/php/conf.d/custom.ini
-# Local administration environment overrides
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
 ADD dotfiles/* /root/
+ADD config/php.ini /usr/local/etc/php/conf.d/custom.ini
+
+ENV TERM xterm-256color
+ENV POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD true
+
 
 # Sendmail stuff
 EXPOSE 25
-
-# Set the workdir
-WORKDIR /var/www/html
-
-# Sendmail stuff
-EXPOSE 25
-
-# Set the workdir
-WORKDIR /var/www/html

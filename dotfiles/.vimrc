@@ -1,33 +1,41 @@
-" { Base config stuff
-  syntax on
-  set paste
-  set nocompatible
-  set vb t_vb=
-  set number
-  set ruler
-  set nobackup
-  set nowb
-  set noswapfile
-  set ls=2
-  set background=dark
-" }
+syntax enable
+set background=dark
+set paste
+set hlsearch
 
-" { filetype options
-  filetype on
-  filetype plugin on
-  filetype indent on
-" }
-
-" { Tab and Indent options
+"{{{ Tabs and Whitespace
   set shiftwidth=2
   set tabstop=2
   set softtabstop=2
-  set smarttab
-  set ai
-  set si
   set expandtab
-  set autoindent
-  set smartindent
   set list
-  set listchars=tab:>-,trail:-
-" }
+  set listchars=tab:>-,trail:~,extends:>,precedes:<
+"}}}
+
+"{{{ UI Options
+  set number
+  set showcmd
+  set cursorline
+  filetype indent plugin on
+  set wildmenu
+  set showmatch
+"}}}
+
+
+"{{{ Autogroups
+augroup configgroup
+    autocmd!
+    autocmd VimEnter * highlight clear SignColumn
+    autocmd FileType php setlocal expandtab
+    autocmd FileType php setlocal list
+    autocmd FileType php setlocal listchars=tab:+\ ,eol:-
+    autocmd FileType php setlocal formatprg=par\ -w80\ -T4
+    autocmd BufEnter *.zsh-theme setlocal filetype=zsh
+    autocmd BufEnter Makefile setlocal noexpandtab
+    autocmd BufEnter *.sh setlocal tabstop=2
+    autocmd BufEnter *.sh setlocal shiftwidth=2
+    autocmd BufEnter *.sh setlocal softtabstop=2
+augroup END
+"}}}
+
+" vim:foldmethod=marker:foldlevel=0
