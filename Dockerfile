@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.4-fpm
 MAINTAINER Cory Collier <corycollier@corycollier.com>
 
 # Do all of the global system package installations
