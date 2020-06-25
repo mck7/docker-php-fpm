@@ -72,6 +72,8 @@ RUN curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
 ADD dotfiles/* /root/
 ADD config/php.ini /usr/local/etc/php/conf.d/custom.ini
 
+RUN pecl install xdebug
+
 ENV TERM xterm-256color
 ENV POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD true
 
