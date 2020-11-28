@@ -24,9 +24,8 @@ RUN apt -y update \
 # Add all of the php specific packages
 RUN docker-php-source extract \
     && docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
+        --with-freetype=/usr/include/ \
+        --with-jpeg=/usr/include/ \
         --enable-gd-jis-conv \
     && docker-php-ext-install \
         gmp \
@@ -42,7 +41,7 @@ RUN docker-php-source extract \
         zip
 
 # Install modules not able to be installed any other way
-# RUN pecl install xdebug
+RUN pecl install xdebug
 
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -60,6 +59,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 # Server configuration overrides
 ADD ./config/php.ini /usr/local/etc/php/conf.d/custom.ini
+
 # Local administration environment overrides
 ADD dotfiles/* /root/
 
