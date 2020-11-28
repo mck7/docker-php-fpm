@@ -21,10 +21,6 @@ RUN apt -y update \
         sqlite3 \
         libsqlite3-dev \
         less \
-        sendmail-bin \
-        sendmail \
-        sendmail-cf \
-        m4 \
         zsh \
         git
 
@@ -71,7 +67,3 @@ RUN pecl install xdebug
 
 ENV TERM xterm-256color
 ENV POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD true
-
-
-# Sendmail stuff
-EXPOSE 25
