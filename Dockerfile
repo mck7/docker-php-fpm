@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.0.0RC5-fpm
 MAINTAINER Cory Collier <corycollier@corycollier.com>
 
 # Do all of the global system package installations
@@ -58,12 +58,12 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 # Extra WP CLI Plugins
 RUN php -d memory_limit=512M "$(which wp)" --allow-root package install markri/wp-sec
 
+ADD config/php.ini /usr/local/etc/php/conf.d/custom.ini
+RUN pecl install xdebug
+
+# Shell additions
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
 ADD dotfiles/* /root/
-ADD config/php.ini /usr/local/etc/php/conf.d/custom.ini
-
-RUN pecl install xdebug
-
 ENV TERM xterm-256color
 ENV POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD true
