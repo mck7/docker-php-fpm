@@ -21,7 +21,8 @@ RUN apt -y update \
         sqlite3 \
         libsqlite3-dev \
         less \
-        git
+        git \
+        zsh
 
 # Add all of the php specific packages
 RUN docker-php-source extract \
