@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.0.0RC5-fpm
 MAINTAINER Cory Collier <corycollier@corycollier.com>
 
 # Do all of the global system package installations
@@ -41,7 +41,7 @@ RUN docker-php-source extract \
         zip
 
 # Install modules not able to be installed any other way
-RUN pecl install xdebug
+# RUN pecl install xdebug
 
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
