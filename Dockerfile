@@ -28,24 +28,24 @@ RUN apt -y update \
         zsh \
         git
 
-        # Add all of the php specific packages
-        RUN docker-php-source extract \
-            && docker-php-ext-configure gd \
-                --with-freetype=/usr/include/ \
-                --with-jpeg=/usr/include/ \
-                --enable-gd-jis-conv \
-            && docker-php-ext-install \
-                gmp \
-                bcmath \
-                exif \
-                gd \
-                mysqli \
-                pcntl \
-                pdo \
-                pdo_mysql \
-                pdo_sqlite \
-                xsl \
-                zip
+# Add all of the php specific packages
+RUN docker-php-source extract \
+    && docker-php-ext-configure gd \
+        --with-freetype=/usr/include/ \
+        --with-jpeg=/usr/include/ \
+        --enable-gd-jis-conv \
+    && docker-php-ext-install \
+        gmp \
+        bcmath \
+        exif \
+        gd \
+        mysqli \
+        pcntl \
+        pdo \
+        pdo_mysql \
+        pdo_sqlite \
+        xsl \
+        zip
 
 
 # Install composer
@@ -53,11 +53,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer
-
-# Configure composer
-RUN export COMPOSER_ALLOW_SUPERUSER=1 \
-  && composer global init \
-  && composer global require hirak/prestissimo
 
 # Wordpress CLI tools
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
