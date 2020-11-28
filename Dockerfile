@@ -45,7 +45,7 @@ RUN docker-php-source extract \
         zip
 
 # Install modules not able to be installed any other way
-# RUN pecl install xdebug
+RUN pecl install xdebug
 
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -53,10 +53,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer
 
-# Configure composer and add prestissimo for faster package installs
-RUN export COMPOSER_ALLOW_SUPERUSER=1 \
-    && composer global init \
-    && composer global require hirak/prestissimo
+# # Configure composer and add prestissimo for faster package installs
+# RUN export COMPOSER_ALLOW_SUPERUSER=1 \
+#     && composer global init \
+#     && composer global require hirak/prestissimo
 
 # Install WP CLI Tools
 # RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
