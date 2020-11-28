@@ -8,8 +8,8 @@ RUN apt -y update \
         libgmp-dev \
         zlib1g-dev \
         libfreetype6-dev \
-    		libjpeg62-turbo-dev \
-    		libmcrypt-dev \
+		libjpeg62-turbo-dev \
+		libmcrypt-dev \
         libxslt-dev \
         libjpeg-dev \
         libzip-dev \
@@ -21,32 +21,26 @@ RUN apt -y update \
         sqlite3 \
         libsqlite3-dev \
         less \
-        sendmail-bin \
-        sendmail \
-        sendmail-cf \
-        m4 \
-        zsh \
         git
 
-        # Add all of the php specific packages
-        RUN docker-php-source extract \
-            && docker-php-ext-configure gd \
-                --with-freetype=/usr/include/ \
-                --with-jpeg=/usr/include/ \
-                --enable-gd-jis-conv \
-            && docker-php-ext-install \
-                gmp \
-                bcmath \
-                exif \
-                gd \
-                mysqli \
-                pcntl \
-                pdo \
-                pdo_mysql \
-                pdo_sqlite \
-                xsl \
-                zip
-
+# Add all of the php specific packages
+RUN docker-php-source extract \
+    && docker-php-ext-configure gd \
+        --with-freetype=/usr/include/ \
+        --with-jpeg=/usr/include/ \
+        --enable-gd-jis-conv \
+    && docker-php-ext-install \
+        gmp \
+        bcmath \
+        exif \
+        gd \
+        mysqli \
+        pcntl \
+        pdo \
+        pdo_mysql \
+        pdo_sqlite \
+        xsl \
+        zip
 
 # Install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -74,7 +68,3 @@ ADD config/php.ini /usr/local/etc/php/conf.d/custom.ini
 
 ENV TERM xterm-256color
 ENV POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD true
-
-
-# Sendmail stuff
-EXPOSE 25
