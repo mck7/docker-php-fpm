@@ -1,5 +1,17 @@
-# docker-apache-php
+# Docker PHP-FPM
 Generic php-fpm image
+
+## PHP Version Information
+
+```
+PHP 8.0.0RC5 (cli) (built: Nov 25 2020 01:10:25) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v4.0.0-dev, Copyright (c) Zend Technologies
+    with Xdebug v3.0.0, Copyright (c) 2002-2020, by Derick Rethans
+```
+
+## PHP Module Information
+
 ```
 [PHP Modules]
 bcmath
