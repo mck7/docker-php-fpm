@@ -1,13 +1,5 @@
 # docker-apache-php
 Generic php-fpm image
-
-Based of the official image from php - [php:7.2-fpm](https://github.com/docker-library/php/blob/873725e57ec2fc5f2642dc0023676597bcc4bea9/7.2/stretch/fpm/Dockerfile)
-
-Adding the following:
-* composer
-* wp-cli
-* vim
-
 ```
 [PHP Modules]
 bcmath
@@ -21,6 +13,7 @@ fileinfo
 filter
 ftp
 gd
+gmp
 hash
 iconv
 json
@@ -45,10 +38,15 @@ SPL
 sqlite3
 standard
 tokenizer
+xdebug
 xml
 xmlreader
 xmlwriter
 xsl
 zip
 zlib
+
+[Zend Modules]
+Xdebug
+
 ```
